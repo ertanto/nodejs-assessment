@@ -6,7 +6,6 @@ class Student extends Model {}
 Student.init({
   email: {
     type: DataTypes.STRING(75),
-    unique: true,
     allowNull: false
   },
   teacher_id: {
