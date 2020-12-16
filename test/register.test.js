@@ -21,10 +21,11 @@ describe('Register API', () => {
       method: 'post',
       url: '/api/register',
       payload: {
-        "teacher": "teacher_test1@gmail.com",
-        "students": [ "student_test1@gmail.com" ]
+        "teacher": "test_teacher1@gmail.com",
+        "students": [ "test_student1@gmail.com" ]
       }
     });
+    console.log(res);
     expect(res.statusCode).to.equal(204);
   });
 
@@ -33,11 +34,11 @@ describe('Register API', () => {
       method: 'post',
       url: '/api/register',
       payload: {
-        "teacher": "teacher_test2@gmail.com",
+        "teacher": "test_teacher1@gmail.com",
         "students":
           [
-            "student_test2a@gmail.com",
-            "student_test2b@gmail.com"
+            "test_student1@gmail.com",
+            "test_student2@gmail.com"
           ]
       }
     });
@@ -56,7 +57,7 @@ describe('Register API', () => {
     const res = await server.inject({
       method: 'post',
       url: '/api/register',
-      payload: "\"teacher\":\"teacher_test2@gmail.com\",\"students\":[\"student_test2a@gmail.com\",\"student_test2b@gmail.com\"]"
+      payload: "\"teacher\":\"test_teacher1@gmail.com\",\"students\":[\"test_student1@gmail.com\",\"test_student2@gmail.com\"]"
     });
     expect(res.statusCode).to.equal(400);
   });
@@ -65,30 +66,42 @@ describe('Register API', () => {
     const res = await server.inject({
       method: 'post',
       url: '/api/register',
-      payload: "{\"shifu\":\"teacher_test1@gmail.com\",\"pupils\":[\"studentjon@gmail.com\",\"studenthon@gmail.com\"]}"
+      payload: "{\"shifu\":\"test_teacher1@gmail.com\",\"pupils\":[\"test_student1@gmail.com\",\"test_student2@gmail.com\"]}"
     });
     expect(res.statusCode).to.equal(400);
   });
 
-  it('Should return bad request if the email is invalid (teacher: "abc.def")', async () => {
+  it('Should return bad request if the teacher email is not in the system', async () => {
     const res = await server.inject({
       method: 'post',
       url: '/api/register',
       payload: {
-        "teacher": "abc.def",
-        "students": [ "student_test1@gmail.com" ]
+        "teacher": "test_teacher999@gmail.com",
+        "students": [ "test_student1@gmail.com" ]
       }
     });
     expect(res.statusCode).to.equal(400);
   });
 
-  it('Should return bad request if the email is invalid (student: [ "abcdef" ])', async () => {
+  it('Should return bad request if teacher email is invalid (e.g. "abc.def")', async () => {
     const res = await server.inject({
       method: 'post',
       url: '/api/register',
       payload: {
-        "teacher": "teacher_test1@gmail.com",
-        "students": [ "abcdef" ]
+        "teacher": "abc.def",
+        "students": [ "test_student1@gmail.com" ]
+      }
+    });
+    expect(res.statusCode).to.equal(400);
+  });
+
+  it('Should return bad request if student email is invalid (e.g. [ "test_student1@gmail.com", "abcdef" ])', async () => {
+    const res = await server.inject({
+      method: 'post',
+      url: '/api/register',
+      payload: {
+        "teacher": "test_teacher1@gmail.com",
+        "students": [ "test_student1@gmail.com", "abcdef" ]
       }
     });
     expect(res.statusCode).to.equal(400);
