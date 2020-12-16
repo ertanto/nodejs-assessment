@@ -7,7 +7,7 @@ const Util = require('../utils/util');
 module.exports = async (request, reply) => {
   let payload = Util.parseData(request.payload);  
   if (typeof payload.teacher==='undefined' || typeof payload.students==='undefined' ) return reply.response({ "message": "Invalid Parameter(s)" }).code(400);
-  if (!Util.validEmail(payload.teacher) || !Util.validEmail(payload.students)) return reply.response({ "message": "There's invalid email(s) in the request body" }).code(400);
+  if (!Util.validEmail(payload.teacher) || !Util.validEmail(payload.students)) return reply.response({ "message": "Invalid email(s)" }).code(400);
  
   let teacher = await Teacher.findOne({ where: { email: payload.teacher } });
   if (teacher===null){

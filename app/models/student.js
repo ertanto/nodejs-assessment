@@ -2,7 +2,6 @@ const sequelize = require('../utils/sequelize');
 const { Model, DataTypes } = require("sequelize");
 const Teacher = require('./teacher');
 
-
 class Student extends Model {}
 Student.init({
   email: {
@@ -15,7 +14,9 @@ Student.init({
     references: {
       model: Teacher,
       key: 'id'
-    }
+    },
+    onUpdate: 'cascade',
+    onDelete: 'cascade'
   }
 }, {
   sequelize,
