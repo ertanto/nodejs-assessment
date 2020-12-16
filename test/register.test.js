@@ -44,6 +44,14 @@ describe('Register API', () => {
     expect(res.statusCode).to.equal(204);
   });
 
+  it('Should return bad request if no payload supplied', async () => {
+    const res = await server.inject({
+      method: 'post',
+      url: '/api/register',
+    });
+    expect(res.statusCode).to.equal(400);
+  });
+
   it('Should return bad request if the payload is invalid JSON', async () => {
     const res = await server.inject({
       method: 'post',
