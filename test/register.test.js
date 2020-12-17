@@ -22,10 +22,9 @@ describe('[Register API]', () => {
       url: '/api/register',
       payload: {
         "teacher": "test_teacher1@gmail.com",
-        "students": [ "test_student1@gmail.com" ]
+        "students": [ "test_student1a@gmail.com" ]
       }
     });
-    console.log(res);
     expect(res.statusCode).to.equal(204);
   });
 
@@ -37,8 +36,8 @@ describe('[Register API]', () => {
         "teacher": "test_teacher1@gmail.com",
         "students":
           [
-            "test_student1@gmail.com",
-            "test_student2@gmail.com"
+            "test_student1b@gmail.com",
+            "test_student2b@gmail.com"
           ]
       }
     });
