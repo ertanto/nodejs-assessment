@@ -13,21 +13,11 @@ const parseData = (data) => {
 }
 
 const validEmail = (data) => {
-  let valid = true;
-  if (typeof data =='object'){
-    for(let i=0; i<data.length; i++ ){
-      let { error, value } = schema.validate({ email: data[i] });
-      if (typeof error!=='undefined'){
-        valid = false;
-      }
+  let { error, value } = schema.validate({ email: data });
+    if (typeof error==='undefined'){
+      return true;
     }
-  } else if (typeof data =='string'){
-    let { error, value } = schema.validate({ email: data });
-    if (typeof error!=='undefined'){
-      valid = false;
-    }
-  }
-  return valid;
+  return false;
 }
 
 module.exports = {

@@ -5,7 +5,7 @@ const { expect } = require('@hapi/code');
 const { afterEach, beforeEach, describe, it } = exports.lab = Lab.script();
 const { init } = require('../app/server');
 
-describe('Register API', () => {
+describe('[Register API]', () => {
   let server;
 
   beforeEach(async () => {
@@ -62,11 +62,27 @@ describe('Register API', () => {
     expect(res.statusCode).to.equal(400);
   });
 
-  it('Should return bad request if the payload does not contain required parameters (teacher, students)', async () => {
+  it('Should return bad request if the payload does not contain required properties (teacher, students)', async () => {
     const res = await server.inject({
       method: 'post',
       url: '/api/register',
       payload: "{\"shifu\":\"test_teacher1@gmail.com\",\"pupils\":[\"test_student1@gmail.com\",\"test_student2@gmail.com\"]}"
+    });
+    expect(res.statusCode).to.equal(400);
+  });
+
+  it('Should return bad request if the payload contains array of teachers', async () => {
+    const res = await server.inject({
+      method: 'post',
+      url: '/api/register',
+      payload: {
+        "teacher": ["test_teacher1@gmail.com","test_teacher2@gmail.com"],
+        "students":
+          [
+            "test_student1@gmail.com",
+            "test_student2@gmail.com"
+          ]
+      }
     });
     expect(res.statusCode).to.equal(400);
   });
