@@ -8,14 +8,10 @@ Student.init({
     type: DataTypes.STRING(75),
     allowNull: false
   },
-  teacher_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Teacher,
-      key: 'id'
-    },
-    onUpdate: 'cascade',
-    onDelete: 'cascade'
+  suspended: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
   }
 }, {
   sequelize,
