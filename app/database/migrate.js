@@ -1,7 +1,7 @@
-const Sequelize = require('../utils/sequelize');
-const Teacher = require('../models/teacher');
-const Student = require('../models/student');
-const Allocation = require('../models/registration');
+const SequelizeConnection = require('../utils/sequelize-connection');
+const TeacherModel = require('../models/teacher-model');
+const StudentModel = require('../models/student-model');
+const RegistrationModel = require('../models/registration-model');
 
 let options = {};
 if (process.env.NODE_ENV==='test'){
@@ -9,5 +9,5 @@ if (process.env.NODE_ENV==='test'){
 } 
 
 (async () => {
-  await Sequelize.sync(options);
+  await SequelizeConnection.sync(options);
 })();

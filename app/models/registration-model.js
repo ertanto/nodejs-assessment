@@ -1,10 +1,7 @@
-const sequelize = require('../utils/sequelize');
-const { Model, DataTypes } = require("sequelize");
-const Teacher = require('./teacher');
-const Student = require('./student');
+const SequelizeConnection = require('../utils/sequelize-connection');
+const { DataTypes } = require("sequelize");
 
-class Registration extends Model {}
-Registration.init({
+var RegistrationModel = SequelizeConnection.define('registration', {
   teacher_id: {
     type: DataTypes.INTEGER,
     references: {
@@ -23,9 +20,6 @@ Registration.init({
     onUpdate: 'cascade',
     onDelete: 'cascade'
   }
-}, {
-  sequelize,
-  modelName: 'allocation'
 });
 
-module.exports = Registration;
+module.exports = RegistrationModel;
