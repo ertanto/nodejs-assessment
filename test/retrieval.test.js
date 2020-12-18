@@ -5,9 +5,7 @@ const { expect } = require('@hapi/code');
 const { afterEach, beforeEach, describe, it } = exports.lab = Lab.script();
 const { init } = require('../app/server');
 
-
-
-describe('[Student API]', () => {
+describe('[Retrieval API]', () => {
   let server;
 
   beforeEach(async () => {

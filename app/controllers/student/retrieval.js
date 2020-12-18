@@ -2,8 +2,6 @@
 const SequelizeConnection = require('../../utils/sequelize-connection');
 const { QueryTypes } = require('sequelize');
 const TeacherModel = require('../../models/teacher-model');
-const StudentModel = require('../../models/student-model');
-const RegistrationModel = require('../../models/registration-model');
 const Util = require('../../utils/util');
 const RequiredParameterMissingException = require('../../exceptions/required-parameter-missing-exception');
 const InvalidEmailException = require('../../exceptions/invalid-email-exception');
