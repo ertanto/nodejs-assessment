@@ -2,11 +2,17 @@
 
 const Lab = require('@hapi/lab');
 const { expect } = require('@hapi/code');
-const { afterEach, beforeEach, describe, it } = exports.lab = Lab.script();
+const { afterEach, before, beforeEach, describe, it } = exports.lab = Lab.script();
 const { init } = require('../app/server');
+const testSetup = require('../app/database/test-setup');
 
 describe('[Retrieval API]', () => {
   let server;
+
+  before(async () => {
+    await testSetup.truncate();
+    await testSetup.seed();
+  });
 
   beforeEach(async () => {
     server = await init();
