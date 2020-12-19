@@ -8,7 +8,7 @@ const InvalidEmailException = require('../../exceptions/invalid-email-exception'
 const RecordNotFoundException = require('../../exceptions/record-not-found-exception');
 
 
-const validateQueryParam = async (queryParam) => {
+const validate = async (queryParam) => {
   if (typeof queryParam.teacher==='undefined' || queryParam.teacher.length===0) throw new RequiredParameterMissingException("Required parameter missing");
   if (typeof queryParam.teacher==='string' && !Util.validEmail(queryParam.teacher)) throw new InvalidEmailException("Invalid email in the parameter");
   if (typeof queryParam.teacher==='object') {
@@ -27,19 +27,19 @@ const validateQueryParam = async (queryParam) => {
 module.exports = async (request, reply) => {
   let queryParam = request.query;
   let teacherID = [];
-  let teacherModel;
+  let teacher;
   let students = [];
   
   try{
-    await validateQueryParam(queryParam);
+    await validate(queryParam);
     if (typeof queryParam.teacher==='string') {
-      teacherModel = await TeacherModel.findOne({ where: { email: queryParam.teacher } })
-      if (teacherModel!==null) teacherID.push(teacherModel.id);
+      teacher = await TeacherModel.findOne({ where: { email: queryParam.teacher } })
+      if (teacher!==null) teacherID.push(teacher.id);
     }
     if (typeof queryParam.teacher==='object') {
       for(let i=0; i<queryParam.teacher.length; i++ ){
-        teacherModel = await TeacherModel.findOne({ where: { email: queryParam.teacher[i] } })
-        if (teacherModel!==null && teacherID.indexOf(teacherModel.id) == -1) teacherID.push(teacherModel.id);
+        teacher = await TeacherModel.findOne({ where: { email: queryParam.teacher[i] } })
+        if (teacher!==null && teacherID.indexOf(teacher.id) == -1) teacherID.push(teacher.id);
       }
     }
     let results = await SequelizeConnection.query(
