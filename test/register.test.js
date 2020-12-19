@@ -4,18 +4,13 @@ const Lab = require('@hapi/lab');
 const { expect } = require('@hapi/code');
 const { afterEach, before, beforeEach, describe, it } = exports.lab = Lab.script();
 const { init } = require('../app/server');
-const SequelizeConnection = require('../app/utils/sequelize-connection');
+const testSetup = require('../app/database/test-setup');
 
 describe('[Register API]', () => {
   let server;
-  
+
   before(async () => {
-    await SequelizeConnection.query('SET FOREIGN_KEY_CHECKS = 0');
-    await SequelizeConnection.query('TRUNCATE TABLE teachers');
-    await SequelizeConnection.query('TRUNCATE TABLE students');
-    await SequelizeConnection.query('TRUNCATE TABLE registrations');
-    await SequelizeConnection.query('SET FOREIGN_KEY_CHECKS = 1');
-    console.log('*** test DB tables truncated *** \n');
+    await testSetup.truncate();
   });
 
   beforeEach(async () => {
