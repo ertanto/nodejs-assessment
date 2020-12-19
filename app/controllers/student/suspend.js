@@ -1,8 +1,6 @@
 'use strict';
-const SequelizeConnection = require('../../utils/sequelize-connection');
 const StudentModel = require('../../models/student-model');
 const Util = require('../../utils/util');
-const RequiredParameterMissingException = require('../../exceptions/required-parameter-missing-exception');
 const InvalidEmailException = require('../../exceptions/invalid-email-exception');
 const RecordNotFoundException = require('../../exceptions/record-not-found-exception');
 
@@ -15,12 +13,11 @@ const validate = async (payload) => {
 module.exports = async (request, reply) => {
   const payload = Util.parseData(request.payload);  
   try{
-    validate(payload);
+    await validate(payload);
     let [updatedRecord] = await StudentModel.update({ suspended: 1 },{ where: { email: payload.student }});
-    if (updatedRecord==0) throw RecordNotFoundException('Unable to suspend student, student not found');
+    if (updatedRecord==0) throw new RecordNotFoundException('Unable to suspend student, ' + payload.student + ' not found');
     return reply.response('').code(204);
   } catch (error){
-    console.log(error);
     return reply.response({ 
       "statusCode": 400,
       "error": "Bad Request",
