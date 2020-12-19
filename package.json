@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "migrate": "node app/database/migrate.js",
-    "seeder": "node app/database/seeder.js",
+    "migrate:test": "NODE_ENV=test node app/database/migrate.js",
     "test": "lab -v -l -m 0 test/*.test.js"
   },
   "repository": {
