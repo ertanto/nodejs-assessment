@@ -35,7 +35,39 @@ describe('[Retrieval API]', () => {
       method: 'get',
       url: '/api/commonstudents?teacher=teacherken@gmail.com&teacher=teacherjoe@gmail.com'
     });
-    expect(res.statusCode).to.equal(200) && expect(JSON.stringify(res.result)).to.equal('{"students":["commonstudent1@gmail.com","commonstudent2@gmail.com"]}');
+    expect(res.statusCode).to.equal(200) && expect(JSON.stringify(res.result)).to.equal('{"students":["commonstudent1@gmail.com","commonstudent2@gmail.com"]}');    
+  });
+
+  it('Should return bad request if no parameter is supplied', async () => {
+    const res = await server.inject({
+      method: 'get',
+      url: '/api/commonstudents'
+    });
+    expect(res.statusCode).to.equal(400);
+  });
+
+  it('Should return bad request if the teacher parameter contains invalid email', async () => {
+    const res = await server.inject({
+      method: 'get',
+      url: '/api/commonstudents?teacher=teacherken.com'
+    });
+    expect(res.statusCode).to.equal(400);
+  });
+
+  it('Should return bad request if the teacher specified is not a valid teacher\'s email (not_valid_teacher@gmail.com)', async () => {
+    const res = await server.inject({
+      method: 'get',
+      url: '/api/commonstudents?teacher=not_valid_teacher@gmail.com'
+    });
+    expect(res.statusCode).to.equal(400);
+  });
+
+  it('Should return bad request if the teacher specified is not a valid teacher\'s email (not_valid_teacher@gmail.com)', async () => {
+    const res = await server.inject({
+      method: 'get',
+      url: '/api/commonstudents?teacher=teacherken@gmail.com&teacher=not_valid_teacher@gmail.com'
+    });
+    expect(res.statusCode).to.equal(400);
   });
 
 });

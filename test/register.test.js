@@ -84,7 +84,13 @@ describe('[Register API]', () => {
     const res = await server.inject({
       method: 'post',
       url: '/api/register',
-      payload: "{\"shifu\":\"test_teacher1@gmail.com\",\"pupils\":[\"test_student1@gmail.com\",\"test_student2@gmail.com\"]}"
+      payload: {
+        "shifu":"test_teacher1@gmail.com",
+        "pupils":[
+          "test_student1@gmail.com",
+          "test_student2@gmail.com"
+        ]
+      }
     });
     expect(res.statusCode).to.equal(400);
   });
