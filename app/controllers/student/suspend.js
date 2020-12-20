@@ -15,7 +15,7 @@ module.exports = async (request, reply) => {
   try{
     await validate(payload);
     let [updatedRecord] = await StudentModel.update({ suspended: 1 },{ where: { email: payload.student }});
-    if (updatedRecord==0) throw new RecordNotFoundException('Unable to suspend student, ' + payload.student + ' not found');
+    if (updatedRecord==0) throw new RecordNotFoundException('Unable to suspend student, ' + payload.student + ' is not a valid active student');
     return reply.response('').code(204);
   } catch (error){
     return reply.response({ 
