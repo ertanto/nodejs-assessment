@@ -1,5 +1,9 @@
 # NodeJS API Assessment
 
+Public API: https://nodejs-assessment.webtify.app
+
+Postman Collection: https://www.getpostman.com/collections/88ea38bc13cab9118bb3
+
 ## Requirements
 -  Node ver 12+
 
